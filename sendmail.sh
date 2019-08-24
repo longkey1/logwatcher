@@ -44,5 +44,5 @@ fi
 # main
 while read line
 do
-  echo ${line} | grep --line-buffered ${GREP_OPTIONS} | xargs -I@ echo "@" | /usr/sbin/sendmail -- ${EMAIL}
+  echo ${line} | grep --line-buffered ${GREP_OPTIONS} | xargs -I @ echo '```@```' | /usr/sbin/sendmail -- ${EMAIL}
 done < <(tail -n0 -F ${LOG_FILE})
