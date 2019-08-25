@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# variables
+MESSAGE='@'
+
 # functions
 function usage() {
   cat <<EOF
@@ -10,30 +13,34 @@ Usage:
 
 Options:
   -l  target log file path
-  -e  distination email address
   -k  keyword string (comma separated)
+  -m  message format [default ${MESSAGE}]
+  -c  notification command
   -h  print this
 EOF
   exit 1
 }
 
 # options
-while getopts l:e:k: opt
+while getopts l:k:m:c: opt
 do
   case ${opt} in
   "l" )
-    readonly LOG_FILE=${OPTARG}
-    ;;
-  "e" )
-    readonly EMAIL=${OPTARG}
+    LOG_FILE=${OPTARG}
     ;;
   "k" )
-    readonly KEYWORDS_STRING=${OPTARG}
+    KEYWORDS_STRING=${OPTARG}
+    ;;
+  "m" )
+    MESSAGE=${OPTARG}
+    ;;
+  "c" )
+    NOTIFICATION_COMMAND=${OPTARG}
     ;;
   :|\?) usage;;
   esac
 done
-if [ -z "${LOG_FILE}" -o -z "${EMAIL}"  -o -z "${KEYWORDS_STRING}" ]; then
+if [ -z "${LOG_FILE}" -o -z "${KEYWORDS_STRING}" -o -z "${NOTIFICATION_COMMAND}" ]; then
   usage
   exit 1
 fi
@@ -54,5 +61,5 @@ fi
 # main
 while read line
 do
-  echo ${line} | grep --line-buffered ${GREP_OPTIONS} | xargs -I @ echo '```@```' | /usr/sbin/sendmail -- ${EMAIL}
+  echo ${line} | grep --line-buffered ${GREP_OPTIONS} | xargs -I @ echo ${MESSAGE} | ${NOTIFICATION_COMMAND}
 done < <(tail -n0 -F ${LOG_FILE})
