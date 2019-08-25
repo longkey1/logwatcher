@@ -3,7 +3,7 @@
 ## Usage
 
 ```
-$ watch.sh [command] [<options>]
+$ watch.sh [<options>]
 ```
 
 ## Options

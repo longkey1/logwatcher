@@ -9,7 +9,7 @@ function usage() {
 $(basename ${0}) is a tool for ...
 
 Usage:
-  $(basename ${0}) [command] [<options>]
+  $(basename ${0}) [<options>]
 
 Options:
   -l  target log file path
