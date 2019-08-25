@@ -2,8 +2,18 @@
 
 # functions
 function usage() {
-  echo "usage:"
-  echo "${0}  [-l log file] [-k keywords] [-e email address]"
+  cat <<EOF
+$(basename ${0}) is a tool for ...
+
+Usage:
+  $(basename ${0}) [command] [<options>]
+
+Options:
+  -l  target log file path
+  -e  distination email address
+  -k  keyword string (comma separated)
+  -h  print this
+EOF
   exit 1
 }
 
