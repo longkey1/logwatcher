@@ -61,5 +61,5 @@ fi
 # main
 while read line
 do
-  echo ${line} | grep --line-buffered ${GREP_OPTIONS} | xargs -I @ echo ${MESSAGE} | ${NOTIFICATION_COMMAND}
+  eval "echo ${line} | grep --line-buffered ${GREP_OPTIONS} | xargs -I @ echo '${MESSAGE}' | ${NOTIFICATION_COMMAND}"
 done < <(tail -n0 -F ${LOG_FILE})
